@@ -10,5 +10,6 @@ urlpatterns = [
     path('students/',views.StudentGenericApiView.as_view(),name='students'),
     path('courses/<int:category_id>/',views.CourseListByCategory.as_view(),name='course_list_by_category'),
     path('homework/create/',views.HomeworkCreateAPIView.as_view(),name='hmw_create'),
-    path('videos/list/',views.VideoListCReateApiView.as_view(),name='video_create')
+    path('videos/list/',views.VideoListCReateApiView.as_view(),name='video_create'),
+    path('videos/list/<int:pk>/',views.VideoDetailAPiView.as_view(),)
 ]

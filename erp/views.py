@@ -1,17 +1,19 @@
 from django.shortcuts import render
-from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView,GenericAPIView,ListAPIView,CreateAPIView
+from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView,GenericAPIView,ListAPIView,CreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from erp.models import Category,Course,Student,Homework,Video
 from .serializers import CategoryModelSerializer,CourseModelSerializer,StudentModelSerializer,HomeworkSerializer,VideoSerializer
 from django.db.models import Count
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
+from erp.permissions import CanEditWithinSpecialTime
+
 # Create your views here.
 
 class CategoryListCreateApiView(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryModelSerializer
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [permissions.IsAuthenticated,]
     
     def get_queryset(self):
         queryset = Category.objects.all().annotate(course_count=Count('courses'))
@@ -100,5 +102,10 @@ class HomeworkCreateAPIView(CreateAPIView):
 class VideoListCReateApiView(ListCreateAPIView):
     serializer_class = VideoSerializer
     queryset = Video.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [CustomerAccessPermission]
     
+    
+class VideoDetailAPiView(RetrieveUpdateDestroyAPIView):
+    serializer_class = VideoSerializer
+    queryset = Video.objects.all()
+    permission_classes = [CanEditWithinSpecialTime]
