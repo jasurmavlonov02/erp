@@ -1,0 +1,19 @@
+{
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/erp"
+    ],
+  "python.autoComplete.extraPaths": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/erp"
+  ],
+  "python.languageServer": "Pylance"
+
+}
