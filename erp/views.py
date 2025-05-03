@@ -7,7 +7,9 @@ from django.db.models import Count
 from rest_framework.response import Response
 from rest_framework import permissions
 from erp.permissions import CanEditWithinSpecialTime
-
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 # Create your views here.
 
 class CategoryListCreateApiView(ListCreateAPIView):
@@ -31,6 +33,8 @@ class CategoryDetailAPiView(RetrieveUpdateDestroyAPIView):
 class CourseListCreateApiView(ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseModelSerializer
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = [IsAuthenticated]
 
 
 
@@ -102,7 +106,8 @@ class HomeworkCreateAPIView(CreateAPIView):
 class VideoListCReateApiView(ListCreateAPIView):
     serializer_class = VideoSerializer
     queryset = Video.objects.all()
-    # permission_classes = [CustomerAccessPermission]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     
     
 class VideoDetailAPiView(RetrieveUpdateDestroyAPIView):
